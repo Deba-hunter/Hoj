@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instagram Server</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bgRotate 10s linear infinite;
+    }
+
+    @keyframes bgRotate {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 400px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #00f5d4;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    input[type="file"] {
+      background: #444;
+      color: #fff;
+    }
+
+    input[type="text"], input[type="password"], input[type="number"] {
+      background: #222;
+      color: #00f5d4;
+    }
+
+    .btn-start {
+      background: linear-gradient(45deg, #00f5d4, #00d4ff);
+      color: #000;
+      font-weight: bold;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-start:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00f5d4;
+    }
+
+    .btn-stop {
+      background: linear-gradient(45deg, #ff4d4d, #ff1a1a);
+      color: white;
+      font-weight: bold;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-stop:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ff4d4d;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 10px;
+      color: #ddd;
+    }
+
+    ::placeholder {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <form class="container" method="POST" enctype="multipart/form-data">
+    <h2>💬 Insta Server</h2>
+
+    <input type="text" name="username" placeholder="👤 Instagram Username" required />
+    <input type="password" name="password" placeholder="🔒 Instagram Password" required />
+    <input type="text" name="receiver" placeholder="📩 Receiver (or group:thread_id)" required />
+    <input type="text" name="person_name" placeholder="🙋 Person Name (e.g. Ram)" required />
+    <input type="number" name="delay" placeholder="⏱ Delay in Seconds (e.g. 5)" required />
+    <input type="file" name="message_file" required />
+
+    {% if loop_active %}
+      <button type="submit" name="stop" value="1" class="btn-stop">🛑 Stop</button>
+    {% else %}
+      <button type="submit" class="btn-start">▶️ Start</button>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="status">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </form>
+</body>
+</html>

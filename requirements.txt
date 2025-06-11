@@ -1,0 +1,3 @@
+flask
+instagrapi
+pillow>=8.1.1
